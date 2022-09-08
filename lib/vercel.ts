@@ -71,6 +71,7 @@ export async function getAccessToken(request: {
   code: string;
   redirect_uri: string;
 }): Promise<Credentials> {
+  console.log('getAccessToken', request)
   const response = await fetch("https://api.vercel.com/v2/oauth/access_token", {
     method: "POST",
     body: new URLSearchParams(request),

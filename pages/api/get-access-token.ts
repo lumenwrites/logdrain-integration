@@ -17,14 +17,14 @@ export default async function handler(
     response.status(400).send("The “code” argument is missing or invalid");
     return;
   }
-
+  console.log('get access token', { CLIENT_ID, CLIENT_SECRET, REDIRECT_HOST })
   const accessTokenResponse = await getAccessToken({
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     redirect_uri: `${REDIRECT_HOST}/callback`,
     code,
   });
-
+  console.log('accessTokenResponse', accessTokenResponse)
   response.setHeader("Content-Type", "application/json");
   response.status(200).send(accessTokenResponse);
 }
