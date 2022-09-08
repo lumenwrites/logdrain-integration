@@ -132,7 +132,14 @@ export async function createLogDrain(
       ...authHeader(accessToken),
     },
   });
-  return await response.then((r) => r.json()).then(decodeLogDrain);
+  
+  return await response.then((r) => {
+    console.log('[versel.ts] createLogDrain response 1', r);
+    return r.json()
+  }).then((r) => { 
+    console.log('[versel.ts] createLogDrain response 2', r);
+    return decodeLogDrain(r);
+  })
 }
 
 /** Delete a log drain */
