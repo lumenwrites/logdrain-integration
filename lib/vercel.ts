@@ -135,6 +135,7 @@ export async function createLogDrain(
   
   return await response.then((r) => {
     console.log('[versel.ts] createLogDrain response 1', r);
+    console.log('[versel.ts] createLogDrain response 1 json', r.json());
     return r.json()
   }).then((r) => { 
     console.log('[versel.ts] createLogDrain response 2', r);
