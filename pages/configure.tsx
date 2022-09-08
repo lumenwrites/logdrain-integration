@@ -50,10 +50,12 @@ const Page: React.FC = () => {
     const { session } = state;
     const { accessToken, teamId } = session;
     try {
+      console.log('[configure.tsx] handleDrainCreation', accessToken, teamId, params)
       const newDrain = await createLogDrain(accessToken, teamId, params);
       const drains = [...session.drains, newDrain];
       setState({ tag: "logged_in", session: { ...session, drains } });
     } catch (e) {
+      console.log('[configure.tsx] handleDrainCreation error', e)
       setState({ ...state, submitting: false, error: `${e}` });
     }
   };
