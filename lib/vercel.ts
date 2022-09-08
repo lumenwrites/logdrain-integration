@@ -124,6 +124,8 @@ export async function createLogDrain(
   }
 ): Promise<LogDrain> {
   const url = getResourceUrl("/v1/integrations/log-drains", teamId);
+  console.log('url', url)
+  console.log('drain', drain)
   const response = fetch(url, {
     method: "POST",
     body: JSON.stringify(drain, null, 2),
@@ -135,7 +137,6 @@ export async function createLogDrain(
   
   return await response.then((r) => {
     console.log('[versel.ts] createLogDrain response 1', r);
-    console.log('[versel.ts] createLogDrain response 1 json', r.json());
     return r.json()
   }).then((r) => { 
     console.log('[versel.ts] createLogDrain response 2', r);
