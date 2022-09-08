@@ -78,14 +78,20 @@ export async function getAccessToken(request: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
-  return await response.json().then(decodeCredentials);
+  return await response.json().then((r) => {
+    console.log('Access token response', r)
+    return decodeCredentials(r)
+  })
 }
 
 /** Client-side helper to trade the temporary setup code for regular access token */
 export const getAccessTokenFromClient = async (code: string) =>
   await fetch(`/api/get-access-token?code=${code}`)
     .then((r) => r.json())
-    .then(decodeCredentials);
+    .then((r) => {
+      console.log('Access token response', r)
+      return decodeCredentials(r)
+    });
 
 /** Retrieve a list of all log drains that are defined for the authorized account */
 export async function getLogDrains(
@@ -123,10 +129,12 @@ export async function createLogDrain(
     secret: string | undefined;
   }
 ): Promise<LogDrain> {
+  // https://vercel.com/docs/log-drains
   const url = getResourceUrl("/v1/integrations/log-drains", teamId);
   console.log('url', url)
   console.log('drain', drain)
   console.log('accessToken', accessToken)
+  console.log(`Making request to ${url}`)
   const response = fetch(url, {
     method: "POST",
     body: JSON.stringify(drain, null, 2),
@@ -135,11 +143,11 @@ export async function createLogDrain(
       ...authHeader(accessToken),
     },
   });
-  
+
   return await response.then((r) => {
     console.log('[versel.ts] createLogDrain response 1', r);
     return r.json()
-  }).then((r) => { 
+  }).then((r) => {
     console.log('[versel.ts] createLogDrain response 2', r);
     return decodeLogDrain(r);
   })
