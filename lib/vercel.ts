@@ -126,6 +126,7 @@ export async function createLogDrain(
   const url = getResourceUrl("/v1/integrations/log-drains", teamId);
   console.log('url', url)
   console.log('drain', drain)
+  console.log('accessToken', accessToken)
   const response = fetch(url, {
     method: "POST",
     body: JSON.stringify(drain, null, 2),
